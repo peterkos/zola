@@ -90,6 +90,8 @@ pub fn build_cli() -> App<'static, 'static> {
                         .takes_value(false)
                         .help("Only rebuild the minimum on change - useful when working on a specific page/section"),
                 ]),
+            SubCommand::with_name("newpost")
+                .about("Create a new blog post under the current date"),
             SubCommand::with_name("check")
                 .about("Try building the project without rendering it. Checks links")
                 .args(&[

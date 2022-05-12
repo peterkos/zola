@@ -7,7 +7,7 @@ use crate::console;
 use errors::Result;
 
 /// Wait for user input and return what they typed
-fn read_line() -> Result<String> {
+pub fn read_line() -> Result<String> {
     let stdin = io::stdin();
     let stdin = stdin.lock();
     let mut lines = stdin.lines();

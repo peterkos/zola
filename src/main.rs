@@ -119,6 +119,18 @@ fn main() {
                 }
             };
         }
+        ("newpost", Some(matches)) => {
+            match cmd::newpost(
+                &root_dir,
+                &config_file,
+            ) {
+                Ok(()) => console::info("Created post."),
+                Err(e) => {
+                    console::unravel_errors("Failed to create new post", &e);
+                    ::std::process::exit(1);
+                }
+            }
+        }
         _ => unreachable!(),
     }
 }
