@@ -53,7 +53,7 @@ pub struct Site {
     // the live reload port to be used if there is one
     pub live_reload: Option<u16>,
     pub output_path: PathBuf,
-    content_path: PathBuf,
+    pub content_path: PathBuf,
     pub static_path: PathBuf,
     pub taxonomies: Vec<Taxonomy>,
     /// A map of all .md files (section and pages) and their permalink
