@@ -22,16 +22,18 @@ pub fn newpost(
 
     // Make a new markdown file with specified date format and title
     let date = Local::now();
-    let date_str = date.format("%Y-%m-%d").to_string() + "-" + title.as_str();
+    let date_str = date.format("%Y-%m-%d").to_string();
+    let file_name = date_str.clone() + "-" + title.as_str() + ".md";
 
     let mut new_post_path = site.content_path;
-    new_post_path.push(date_str);
+    new_post_path.push(file_name);
 
-    let content = r#"
-        Hello, world!
-    "#;
+    let content = format!("+++ \n
+                   title = \"{}\"
+                   date = \"{}\"
+                   +++", title, date_str);
 
-    create_file(&new_post_path, content)?;
+    create_file(&new_post_path, content.as_str())?;
 
     Ok(())
 }
