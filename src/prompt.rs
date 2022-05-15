@@ -17,6 +17,12 @@ pub fn read_line() -> Result<String> {
         .ok_or_else(|| "unable to read from stdin for confirmation".into())
 }
 
+pub fn read_line_with_prompt(msg: &str) -> Result<String> {
+    print!("{msg}");
+    let _ = io::stdout().flush();
+    read_line()
+}
+
 /// Ask a yes/no question to the user
 pub fn ask_bool(question: &str, default: bool) -> Result<bool> {
     print!("{} {}: ", question, if default { "[Y/n]" } else { "[y/N]" });

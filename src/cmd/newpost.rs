@@ -1,21 +1,25 @@
 use std::path::Path;
 
 use chrono::Local;
-use errors::Result;
+use errors::{Error, Result};
 use site::Site;
 
-use crate::console;
-use crate::prompt::read_line;
+use crate::prompt::read_line_with_prompt;
 use utils::fs::*;
 
+/// Prompts for a post tilte and creates a date-stamped `.md` file
+/// in the `content` directory if possible.
+/// Bails if no title is specified.
 pub fn newpost(
     root_dir: &Path,
     config_file: &Path,
 ) -> Result<()> {
     let site = Site::new(root_dir, config_file)?;
+    let title = read_line_with_prompt("Enter post title: ")?;
 
-    let title = read_line()?;
-    console::info(format!("title: {}", title).as_str());
+    if title.is_empty() {
+        return Err(Error::msg("No title specified"))
+    }
 
     // Attempt to create directory if content directory does not exist
     create_directory(&site.content_path)?;
@@ -28,10 +32,10 @@ pub fn newpost(
     let mut new_post_path = site.content_path;
     new_post_path.push(file_name);
 
-    let content = format!("+++ \n
-                   title = \"{}\"
-                   date = \"{}\"
-                   +++", title, date_str);
+    let content = format!(r#"+++
+title = "{}"
+date = "{}"
++++"#, title, date_str);
 
     create_file(&new_post_path, content.as_str())?;
 

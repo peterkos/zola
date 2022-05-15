@@ -119,7 +119,7 @@ fn main() {
                 }
             };
         }
-        ("newpost", Some(matches)) => {
+        ("newpost", Some(_)) => {
             match cmd::newpost(
                 &root_dir,
                 &config_file,
